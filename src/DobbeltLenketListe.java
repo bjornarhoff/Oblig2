@@ -219,6 +219,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
         } return builder.toString();
     }
 
+    /*hello*/
 
     public String omvendtString()
     {
