@@ -35,7 +35,20 @@ public class DobbeltLenketListe<T> implements Liste<T>
     // hjelpemetode
     private Node<T> finnNode(int indeks)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        Node<T> h = hode;
+        if (indeks < (antall/2)) {
+            for (int i = 0; i<indeks; i++) {
+                h = h.neste;
+            }
+        } else
+            {
+                Node <T> t = hale;
+                for (int j = 0; j<indeks; j--)
+                {
+                    t = t.forrige;
+                } return t;
+            }
+            return h;
     }
 
     // konstruktør
@@ -92,7 +105,32 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public boolean leggInn(T verdi)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+
+        Objects.requireNonNull(verdi, "Liste verdien er 0");
+        if(antall == 0){
+            hode = new Node<T>(verdi, null, null);
+        } else {
+            Node p = hode;
+
+            for (int i = 0; i < antall-1; i++){
+                p = p.neste;
+            }
+
+            Node<T> q = new Node(verdi, p,null);
+
+            q.verdi = verdi;
+            p.neste = q;
+            q.forrige = p;
+
+            hale = q;
+
+
+        }
+
+
+        antall++;
+
+        return true;
     }
 
     @Override
@@ -110,7 +148,9 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public T hent(int indeks)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        indeksKontroll(indeks, false);
+
+        return finnNode(indeks).verdi;
     }
 
     @Override
@@ -122,7 +162,16 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public T oppdater(int indeks, T nyverdi)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        Objects.requireNonNull(nyverdi, "Ikke lov med null-verdier");
+
+        indeksKontroll(indeks,false);
+
+        Node <T> d = finnNode(indeks);
+        T gammelVerdi = d.verdi;
+
+        d.verdi = nyverdi;
+
+        return gammelVerdi;
     }
 
     @Override
