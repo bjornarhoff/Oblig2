@@ -12,15 +12,15 @@ Oblig 2 sendes inn!
 */
 
 ///// Oppdatert 10. september 2018 ///////////////
-                                                                    /*
+
 import java.util.*;
 
 public class Oblig2Test {
     public static void main(String[] args) {
         int antallFeil = 0;
 
-        //antallFeil += oppgave1();
-        //antallFeil += oppgave2();
+        antallFeil += oppgave1();
+        antallFeil += oppgave2();
         //antallFeil += oppgave3();
         //antallFeil += oppgave4();
         //antallFeil += oppgave5();
@@ -1349,4 +1349,3 @@ public class Oblig2Test {
     }
 
 } // Oblig2Test
-                                                                */

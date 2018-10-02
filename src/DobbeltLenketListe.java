@@ -49,8 +49,8 @@ public class DobbeltLenketListe<T> implements Liste<T>
     // konstruktør
     public DobbeltLenketListe(T[] a)
     {
-        this();
-        Objects.requireNonNull(a,"Tabellen a er null!");
+        this();   // Kaller på default konstruktør
+        Objects.requireNonNull(a,"Tabellen a er null!"); // Sjekker om det er tom liste
 
         int i = 0;
         while (i < a.length && a[i] == null) i++;
@@ -146,13 +146,58 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public String toString()
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        if (tom())
+        {
+            return "[]";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+
+        if (!tom()) {
+            Node<T> h = hode;
+            builder.append(h.verdi);
+
+            h = h.neste;
+
+        while (h != null)  // Sjekker om det er noe mer å ta med
+        {
+            builder.append(",").append(" ").append(h.verdi);
+            h = h.neste;
+        }
+            builder.append("]");
+
+        } return builder.toString();
     }
+
 
     public String omvendtString()
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        if (tom())
+        {
+            return "[]";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append('[');
+
+        if (!tom())
+        {
+            Node <T> t = hale;
+            builder.append(t.verdi);
+
+            t = t.forrige;
+
+            while (t != null)  // Sjekker om det er noe mer å ta med
+            {
+                builder.append(',').append(' ').append(t.verdi);
+                t = t.forrige;
+            }
+            builder.append("]");
+
+        } return builder.toString();
     }
+
 
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c)
     {
