@@ -35,14 +35,12 @@ public class DobbeltLenketListe<T> implements Liste<T>
     // hjelpemetode
     private Node<T> finnNode(int indeks)
     {
-
-        {
-            Node<T> h = hode;
-            if (indeks < (antall/2)) {
-                for (int i = 0; i<indeks; i++) {
-                    h = h.neste;
-                }
-            } else
+        Node<T> h = hode;
+        if (indeks < (antall/2)) {
+            for (int i = 0; i<indeks; i++) {
+                h = h.neste;
+            }
+        } else
             {
                 Node <T> t = hale;
                 for (int j = 0; j<indeks; j--)
@@ -51,13 +49,6 @@ public class DobbeltLenketListe<T> implements Liste<T>
                 } return t;
             }
             return h;
-        }
-        /*throw new UnsupportedOperationException("Ikke laget ennå!");*/
-
-
-
-
-
     }
 
     // konstruktør
@@ -157,7 +148,9 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public T hent(int indeks)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        indeksKontroll(indeks, false);
+
+        return finnNode(indeks).verdi;
     }
 
     @Override
@@ -169,7 +162,16 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public T oppdater(int indeks, T nyverdi)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        Objects.requireNonNull(nyverdi, "Ikke lov med null-verdier");
+
+        indeksKontroll(indeks,false);
+
+        Node <T> d = finnNode(indeks);
+        T gammelVerdi = d.verdi;
+
+        d.verdi = nyverdi;
+
+        return gammelVerdi;
     }
 
     @Override
@@ -244,9 +246,6 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
         } return builder.toString();
     }
-
-
-
 
 
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c)
