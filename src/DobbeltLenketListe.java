@@ -158,13 +158,49 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public void leggInn(int indeks, T verdi)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        Objects.requireNonNull(verdi, "Ikke tillatt med null-verdier!");
+
+        indeksKontroll(indeks, true);  // Se Liste, true: indeks = antall er lovlig
+
+        if (indeks == 0)                     // ny verdi skal ligge først
+        {
+            hode = new Node<>(verdi,null, hode); // legges først
+
+            if(antall == 0)
+            {
+             hale = hode;
+            }
+
+            if (antall != 0)
+            {
+                hode.neste.forrige = hode; // hode og hale går til samme node
+            }
+
+        } else if (indeks == antall)           // ny verdi skal ligge bakerst
+        {
+            hale = hale.neste = new Node<>(verdi, hale, null);  // legges bakerst
+        } else
+            {
+            Node<T> p = hode;                  // p flyttes indeks - 1 ganger
+            for (int i = 1; i < indeks; i++)
+            {
+                p = p.neste;
+            }
+
+            p.neste = new Node<>(verdi, p, p.neste);  // verdi settes inn i listen
+                p.neste.neste.forrige = p.neste;
+        }
+
+        antall++;                            // listen har fått en ny verdi
+        endringer++;
     }
+
+
 
     @Override
     public boolean inneholder(T verdi)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        return indeksTil(verdi) != -1;
     }
 
     @Override
@@ -178,7 +214,18 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public int indeksTil(T verdi)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        if (verdi == null) return -1;
+
+        Node<T> p = hode;
+
+        for (int indeks = 0; indeks < antall ; indeks++)
+        {
+            if (p.verdi.equals(verdi))
+
+                return indeks;
+            p = p.neste;
+        }
+        return -1;
     }
 
     @Override
@@ -265,9 +312,9 @@ public class DobbeltLenketListe<T> implements Liste<T>
                 builder.append(',').append(' ').append(t.verdi);
                 t = t.forrige;
             }
-            builder.append("]");
 
-        } return builder.toString();
+        } builder.append("]");
+        return builder.toString();
     }
 
 
