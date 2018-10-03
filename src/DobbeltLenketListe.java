@@ -1,8 +1,4 @@
-import java.util.Comparator;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 public class DobbeltLenketListe<T> implements Liste<T>
 {
@@ -35,18 +31,19 @@ public class DobbeltLenketListe<T> implements Liste<T>
     // hjelpemetode
     private Node<T> finnNode(int indeks)
     {
-        Node<T> h = hode;
+        Node<T> h;
         if (indeks < (antall/2)) {
+            h = hode;
             for (int i = 0; i<indeks; i++) {
                 h = h.neste;
             }
         } else
             {
-                Node <T> t = hale;
-                for (int j = 0; j<indeks; j--)
+                h = hale;
+                for (int j = antall-1; j > indeks; j--)
                 {
-                    t = t.forrige;
-                } return t;
+                    h = h.forrige;
+                } return h;
             }
             return h;
     }
@@ -87,7 +84,32 @@ public class DobbeltLenketListe<T> implements Liste<T>
     // subliste
     public Liste<T> subliste(int fra, int til)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        fratilKontroll(antall, fra, til);
+
+        DobbeltLenketListe liste = new DobbeltLenketListe();
+
+        for(int i=fra; i<til;i++)
+        {
+            liste.leggInn(hent(i));
+        }
+
+        return liste;
+    }
+
+
+    private static void fratilKontroll(int antall, int fra, int til)
+    {
+        if (fra < 0)                                  // fra er negativ
+            throw new IndexOutOfBoundsException
+                    ("fra(" + fra + ") er negativ!");
+
+        if (til > antall)                          // til er utenfor tabellen
+            throw new IndexOutOfBoundsException
+                    ("til(" + til + ") > antall (" + antall + ")");
+
+        if (fra > til)                                // fra er større enn til
+            throw new IllegalArgumentException
+                    ("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
     }
 
     @Override
@@ -101,14 +123,14 @@ public class DobbeltLenketListe<T> implements Liste<T>
     {
         return antall == 0;
     }
-
     @Override
     public boolean leggInn(T verdi)
     {
 
         Objects.requireNonNull(verdi, "Liste verdien er 0");
+
         if(antall == 0){
-            hode = new Node<T>(verdi, null, null);
+            hode = hale = new Node<T>(verdi, null, null);
         } else {
             Node p = hode;
 
@@ -124,14 +146,14 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
             hale = q;
 
-
         }
 
-
         antall++;
+        endringer++;
 
         return true;
     }
+
 
     @Override
     public void leggInn(int indeks, T verdi)
@@ -170,6 +192,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
         T gammelVerdi = d.verdi;
 
         d.verdi = nyverdi;
+        endringer++;
 
         return gammelVerdi;
     }
@@ -214,9 +237,9 @@ public class DobbeltLenketListe<T> implements Liste<T>
             builder.append(",").append(" ").append(h.verdi);
             h = h.neste;
         }
-            builder.append("]");
 
-        } return builder.toString();
+        }  builder.append("]");
+        return builder.toString();
     }
 
 
