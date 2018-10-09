@@ -134,15 +134,34 @@ public class DobbeltLenketListe<T> implements Liste<T>
     }
 
     @Override
-    public void leggInn(int indeks, T verdi)
-    {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+    public void leggInn(int indeks, T verdi) {
+        {
+            Objects.requireNonNull(verdi, "Ikke tillatt med null-verdier!");
+
+            indeksKontroll(indeks, true);  // Se Liste, true: indeks = antall er lovlig
+
+            if (indeks == 0)                     // ny verdi skal ligge først
+            {
+                hode = new Node<>(verdi,null, hode);    // legges først
+                if (antall == 0) hale = hode;      // hode og hale går til samme node
+            } else if (indeks == antall)           // ny verdi skal ligge bakerst
+            {
+                hale = hale.neste = new Node<>(verdi, hale, null);  // legges bakerst
+            } else {
+                Node<T> p = hode;                  // p flyttes indeks - 1 ganger
+                for (int i = 1; i < indeks; i++) p = p.neste;
+
+                p.neste = new Node<>(verdi, p.forrige, p.neste);  // verdi settes inn i listen
+            }
+
+            antall++;                            // listen har fått en ny verdi
+        }
     }
 
     @Override
     public boolean inneholder(T verdi)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+      return indeksTil(verdi) != -1;
     }
 
     @Override
@@ -155,9 +174,22 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
     @Override
     public int indeksTil(T verdi)
+
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        if (verdi == null) return -1;
+
+        Node<T> p = hode;
+
+        for (int indeks = 0; indeks < antall ; indeks++)
+        {
+            if (p.verdi.equals(verdi))
+
+                return indeks;
+                p = p.neste;
+        }
+        return -1;
     }
+
 
     @Override
     public T oppdater(int indeks, T nyverdi)
@@ -189,7 +221,32 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public void nullstill()
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        Node<T> p = hode, q = null;
+
+        while (p != null)
+        {
+            q = p.neste;
+            p.neste = null;
+            p.verdi = null;
+            p = q;
+        }
+
+        hode = hale = null;
+        antall = 0;
+    }
+
+    public T nullstill(int indeks)
+    {
+        indeksKontroll(indeks, false);
+
+        Iterator<T> i = iterator();
+
+        for (int k = 0; k < indeks; k++) i.next();
+
+        T temp = i.next();
+        i.remove();
+
+        return temp;
     }
 
     @Override
@@ -247,6 +304,8 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
         } return builder.toString();
     }
+
+
 
 
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c)
