@@ -301,27 +301,52 @@ public class DobbeltLenketListe<T> implements Liste<T>
     {
         indeksKontroll(indeks,false);    // indeks = antall er ulovlig
 
-        T tmp;                      // Hjelpevariabel
 
-        if(indeks == 0)      // Sjekker første verdi
+        Node<T> m = finnNode(indeks);
+        Node<T> o = m.neste;
+        Node<T> n = m.forrige;
+
+        T tmp;                      // Hjelpevariabel
+        tmp = m.verdi;    // Lagrer verdien som skal fjernes
+
+        if(n == null)      // Sjekker første verdi
         {
-            tmp = hode.verdi;       // Lagre verdien som skal fjernes
+
             hode = hode.neste;     // flytter hode-peker til neste
-            if (antall == 1)        // Om antallet i listen hadde bare en verdi
+            m.verdi = null;
+
+            if (o == null)        // Om antallet i listen hadde bare en verdi
             {
                 hale = null;
+
             }
+
+            else
+            {
+                o.forrige = null;
+            }
+
+
         }
           else {
-              Node<T> n = finnNode(indeks-1);   // n er noden foran som skal fjernes
-              Node<T> m = n.neste;              // m skal fjernes
-              tmp = m.verdi;    // Lagrer verdien som skal fjernes
 
-              if (m == hale)
-              {
-                  hale = n;                       // n er siste node
-                  n.neste = m.neste;               // Hopper over m
-              }
+            m.neste = null;
+            m.forrige = null;
+
+
+            if (m == hale)
+            {
+                hale = n;                       // n er siste node
+                n.neste = null;
+                m.verdi= null;
+            }
+            else
+                {
+                    o.forrige = n;
+                    n.neste = o;
+                    m.verdi= null;
+                }
+
           }
           antall--;                                  // Reduserer antallet
           endringer++;                              // Øker endringer
