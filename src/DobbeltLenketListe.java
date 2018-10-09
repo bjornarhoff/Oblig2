@@ -160,7 +160,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
     {
         Objects.requireNonNull(verdi, "Ikke tillatt med null-verdier!");
 
-        indeksKontroll(indeks, true);  // Se Liste, true: indeks = antall er lovlig
+        indeksKontroll(indeks, true);  // true: indeks = antall er lovlig
 
         if (indeks == 0)                     // ny verdi skal ligge først
         {
@@ -177,9 +177,10 @@ public class DobbeltLenketListe<T> implements Liste<T>
             }
 
         } else if (indeks == antall)           // ny verdi skal ligge bakerst
-        {
+            {
             hale = hale.neste = new Node<>(verdi, hale, null);  // legges bakerst
-        } else
+
+            } else
             {
             Node<T> p = hode;                  // p flyttes indeks - 1 ganger
             for (int i = 1; i < indeks; i++)
@@ -214,15 +215,18 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public int indeksTil(T verdi)
     {
-        if (verdi == null) return -1;
+        if (verdi == null) {
+            return -1;
+        }
 
         Node<T> p = hode;
 
         for (int indeks = 0; indeks < antall ; indeks++)
         {
             if (p.verdi.equals(verdi))
-
+            {
                 return indeks;
+            }
             p = p.neste;
         }
         return -1;
@@ -245,15 +249,85 @@ public class DobbeltLenketListe<T> implements Liste<T>
     }
 
     @Override
-    public boolean fjern(T verdi)
-    {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+    public boolean fjern(T verdi) {
+        if (verdi == null)              // Sjekker at om ingen null verdier
+        {
+            return false;
+        }
+
+        Node<T> n = hode;              //  Pekere
+        Node<T> m = null;
+
+        while (n != null)                  // n skal finne verdien T
+        {
+            if (n.verdi.equals(verdi))     // Hvis funnet, stopp
+            {
+                break;
+            }
+
+            m = n;                  // Setter m til gamle n
+            n = n.neste;            // Setter n til neste 
+        }
+
+        if (n == null) {
+            return false;
+
+        } else if (n == hode) {
+            hode = hode.neste;
+            if (hode != null) {
+                hode.forrige=null;
+            }
+        } else {
+            m.neste = n.neste;
+            if(n == hale) {
+                 hale = m;
+            }
+            else {
+                n.neste.forrige = m;
+            }
+    }    
+
+        n.verdi = null;
+        n.neste = null;
+
+        antall--;
+        endringer++;
+
+        return true;
     }
 
     @Override
     public T fjern(int indeks)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        indeksKontroll(indeks,false);    // indeks = antall er ulovlig
+
+        T tmp;                      // Hjelpevariabel
+
+        if(indeks == 0)      // Sjekker første verdi
+        {
+            tmp = hode.verdi;       // Lagre verdien som skal fjernes
+            hode = hode.neste;     // flytter hode-peker til neste
+            if (antall == 1)        // Om antallet i listen hadde bare en verdi
+            {
+                hale = null;
+            }
+        }
+          else {
+              Node<T> n = finnNode(indeks-1);   // n er noden foran som skal fjernes
+              Node<T> m = n.neste;              // m skal fjernes
+              tmp = m.verdi;    // Lagrer verdien som skal fjernes
+
+              if (m == hale)
+              {
+                  hale = n;                       // n er siste node
+                  n.neste = m.neste;               // Hopper over m
+              }
+          }
+          antall--;                                  // Reduserer antallet
+          endringer++;                              // Øker endringer
+
+          return tmp;
+
     }
 
     @Override
