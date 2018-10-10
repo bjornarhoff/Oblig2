@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="83283bac-9833-41cb-980a-3b1856bccde5" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Oblig2/Beholder.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Oblig2/DobbeltLenketListe$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Oblig2/DobbeltLenketListe$DobbeltLenketListeIterator.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Oblig2/DobbeltLenketListe$Node.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Oblig2/DobbeltLenketListe.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Oblig2/Liste.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Oblig2/Main.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Oblig2/Oblig2Test$1Test.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Oblig2/Oblig2Test.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Oblig2Test.java" afterPath="$PROJECT_DIR$/src/Oblig2Test.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/DobbeltLenketListe.java" afterPath="$PROJECT_DIR$/src/DobbeltLenketListe.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,17 +15,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DobbeltLenketListe.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DobbeltLenketListe.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/DobbeltLenketListe.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            <state relative-caret-position="405">
+              <caret line="473" column="22" lean-forward="false" selection-start-line="473" selection-start-column="22" selection-end-line="473" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Oblig2Test.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Oblig2Test.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Oblig2Test.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
@@ -58,6 +49,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/Oblig2Test.java" />
+        <option value="$PROJECT_DIR$/src/DobbeltLenketListe.java" />
       </list>
     </option>
   </component>
@@ -108,10 +100,10 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="RunDashboard">
@@ -239,6 +231,14 @@
       <option name="presentableId" value="Default" />
       <updated>1539092361087</updated>
     </task>
+    <task id="LOCAL-00001" summary="fjeren out/">
+      <created>1539092414752</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1539092414752</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -277,7 +277,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fjernet workspace.xml ?" />
-    <option name="LAST_COMMIT_MESSAGE" value="fjernet workspace.xml ?" />
+    <MESSAGE value="fjeren out/" />
+    <option name="LAST_COMMIT_MESSAGE" value="fjeren out/" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -294,7 +295,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Oblig2Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
+        <state relative-caret-position="405">
           <caret line="27" column="10" lean-forward="false" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="10" />
           <folding />
         </state>
@@ -312,6 +313,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="27" column="10" lean-forward="false" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Oblig2Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="27" column="10" lean-forward="false" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DobbeltLenketListe.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="473" column="22" lean-forward="false" selection-start-line="473" selection-start-column="22" selection-end-line="473" selection-end-column="22" />
           <folding />
         </state>
       </provider>
