@@ -358,7 +358,32 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public void nullstill()
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        Node<T> p = hode, q = null;
+
+        while (p != null)
+        {
+            q = p.neste;
+            p.neste = null;
+            p.verdi = null;
+            p = q;
+        }
+
+        hode = hale = null;
+        antall = 0;
+    }
+
+    public T nullstill(int indeks)
+    {
+        indeksKontroll(indeks, false);
+
+        Iterator<T> i = iterator();
+
+        for (int k = 0; k < indeks; k++) i.next();
+
+        T temp = i.next();
+        i.remove();
+
+        return temp;
     }
 
     @Override
@@ -428,7 +453,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
     @Override
     public Iterator<T> iterator()
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        return new DobbeltLenketListeIterator();
     }
 
     public Iterator<T> iterator(int indeks)
@@ -463,14 +488,55 @@ public class DobbeltLenketListe<T> implements Liste<T>
         @Override
         public T next()
         {
-            throw new UnsupportedOperationException("Ikke laget ennå!");
+            if (iteratorendringer == endringer){
+                throw new ConcurrentModificationException("this is wrong");
+            }
+            if(hasNext() == true){
+                throw new NoSuchElementException("Det er ikke et element");
+            }
+
+            fjernOK = true;
+
+
+            return null ;
         }
 
+        /*
         @Override
         public void remove()
         {
-            throw new UnsupportedOperationException("Ikke laget ennå!");
+            boolean fjernOK = false;        // remove() kan ikke kalles på nytt
+
+            if (!fjernOK) throw new IllegalStateException("Ulovlig tilstand!");
+
+            Node<T> q = hode;              // hjelpevariabel
+
+
+            if (hode.neste == p)           // skal den første fjernes?
+            {
+                hode = hode.neste;           // den første fjernes
+                if (p == null) hale = null;  // dette var den eneste noden
+            }
+            else
+            {
+                Node<T> r = hode;            // må finne forgjengeren
+                // til forgjengeren til p
+                while (r.neste.neste != p)
+                {
+                    r = r.neste;               // flytter r
+                }
+
+                q = r.neste;                 // det er q som skal fjernes
+                r.neste = p;                 // "hopper" over q
+                if (p == null) hale = r;     // q var den siste
+            }
+
+            q.verdi = null;                // nuller verdien i noden
+            q.neste = null;                // nuller nestereferansen
+
+            antall--;                      // en node mindre i listen
         }
+        } */
 
     } // DobbeltLenketListeIterator
 
