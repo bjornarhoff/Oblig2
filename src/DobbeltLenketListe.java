@@ -458,7 +458,8 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
     public Iterator<T> iterator(int indeks)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        indeksKontroll(indeks, false);
+        return iterator();
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T>
