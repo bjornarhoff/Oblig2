@@ -419,7 +419,10 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c)
     {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        if (liste.antall() < 2)    // Om listen har ett element, er listen sortert
+        {
+            return;
+        }
     }
 
     @Override
@@ -471,6 +474,5 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
     } // DobbeltLenketListeIterator
 
-    //Heisann
 
 } // DobbeltLenketListe
