@@ -370,6 +370,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
         hode = hale = null;
         antall = 0;
+        endringer++;
     }
 
     public T nullstill(int indeks)
@@ -475,7 +476,7 @@ public class DobbeltLenketListe<T> implements Liste<T>
     public Iterator<T> iterator(int indeks)
     {
         indeksKontroll(indeks, false);
-        return iterator();
+        return new DobbeltLenketListeIterator(indeks);
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T>
@@ -493,7 +494,12 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
         private DobbeltLenketListeIterator(int indeks)
         {
-            throw new UnsupportedOperationException("Ikke laget ennå!");
+            indeksKontroll(indeks,false);
+            denne = finnNode(indeks);
+            iteratorendringer = endringer;
+            fjernOK = false;
+
+
         }
 
         @Override
@@ -505,57 +511,78 @@ public class DobbeltLenketListe<T> implements Liste<T>
         @Override
         public T next()
         {
-            if (iteratorendringer == endringer){
-                throw new ConcurrentModificationException("this is wrong");
+            if (iteratorendringer != endringer){
+                throw new ConcurrentModificationException("Endringer og iteratorendringer er ulike.");
             }
-            if(hasNext() == true){
-                throw new NoSuchElementException("Det er ikke et element");
+            if(!hasNext()){
+                throw new NoSuchElementException("Det finnes ikke en neste node");
             }
 
             fjernOK = true;
+            T temp = denne.verdi;
+            denne = denne.neste;
 
 
-            return null ;
+            return temp;
         }
 
-        /*
+
         @Override
         public void remove()
         {
-            boolean fjernOK = false;        // remove() kan ikke kalles på nytt
 
-            if (!fjernOK) throw new IllegalStateException("Ulovlig tilstand!");
+
+            if (!fjernOK)
+            {
+                throw new IllegalStateException("Ulovlig tilstand!");
+            }
+            if (endringer != iteratorendringer)
+            {
+                throw new ConcurrentModificationException("Endringer og iteratorendringer er ulike.");
+            }
+            fjernOK = false;        // remove() kan ikke kalles på nytt
 
             Node<T> q = hode;              // hjelpevariabel
 
 
-            if (hode.neste == p)           // skal den første fjernes?
+            if (antall == 1)           // Inneholder listen bare et element?
             {
-                hode = hode.neste;           // den første fjernes
-                if (p == null) hale = null;  // dette var den eneste noden
+                hode = hale = null;           // Både hodet og halen settes til null. Listen er tom
+            }
+            else if (denne == null)
+            {
+                q = hale;
+                hale = hale.forrige;
+                hale.neste = null;
+            }
+            else if(denne.forrige == hode)
+            {
+                hode = hode.neste;
+                hode.forrige = null;
+
             }
             else
             {
-                Node<T> r = hode;            // må finne forgjengeren
-                // til forgjengeren til p
-                while (r.neste.neste != p)
-                {
-                    r = r.neste;               // flytter r
+                Node<T> p = hode;
+
+                while(p.neste.neste != denne){
+                    p = p.neste;
                 }
-
-                q = r.neste;                 // det er q som skal fjernes
-                r.neste = p;                 // "hopper" over q
-                if (p == null) hale = r;     // q var den siste
+                q = p.neste;
+                p.neste = denne;
+                denne.forrige = p;
             }
+            q.verdi = null;
+            q.neste = null;
+            q.forrige = null;
 
-            q.verdi = null;                // nuller verdien i noden
-            q.neste = null;                // nuller nestereferansen
-
-            antall--;                      // en node mindre i listen
+            antall--;
+            endringer++;
+            iteratorendringer++;                    // en node mindre i listen
         }
-        } */
+        }
 
     } // DobbeltLenketListeIterator
 
 
-} // DobbeltLenketListe
+ // DobbeltLenketListe
