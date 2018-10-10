@@ -1,5 +1,7 @@
 import java.util.*;
 
+/** Bjørnar Hoff (s325858) Sven Daneel (s325867) Steffen Bruvik (s325874) */
+
 public class DobbeltLenketListe<T> implements Liste<T>
 {
     private static final class Node<T>   // en indre nodeklasse
@@ -530,7 +532,6 @@ public class DobbeltLenketListe<T> implements Liste<T>
         @Override
         public void remove()
         {
-
 
             if (!fjernOK)
             {
