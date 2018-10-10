@@ -471,6 +471,6 @@ public class DobbeltLenketListe<T> implements Liste<T>
 
     } // DobbeltLenketListeIterator
 
-    // Heisann heisann
+    //Heisann
 
 } // DobbeltLenketListe
